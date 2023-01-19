@@ -1,3 +1,3 @@
 # Simple-Banking-System
 
-Uso de Luhn Algorithm 
+Uso del Algoritmo de Luhn
