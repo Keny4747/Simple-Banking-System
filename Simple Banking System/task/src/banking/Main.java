@@ -8,15 +8,13 @@ import java.util.Scanner;
 enum MenuOpt {
     CREATE(1),
     LOG(2),
-    EXIT(3),
+    EXIT(0),
     DEFAULT(4);
     final int value;
 
     MenuOpt(int value) {
         this.value = value;
     }
-
-
 }
 
 enum BankingSystem {
@@ -40,6 +38,8 @@ public class Main {
             menuBank(inputUser);
         } while (inputUser != 0);
 
+        System.out.println("Bye!");
+
     }
 
     public static void showMenu() {
@@ -57,7 +57,6 @@ public class Main {
             case CREATE -> createBankAccount();
             case LOG -> logAccount();
             case EXIT -> System.out.println("TODO exit");
-            default -> System.out.println("Invalid input!");
         }
     }
 
@@ -99,7 +98,7 @@ public class Main {
 
     public static boolean searchAccount(String cardNumber) {
         for (Account x : accounts) {
-            if (x.getCardNumber().equals(cardNumber)) {
+            if (cardNumber.equals(x.getCardNumber())) {
                 return true;
             }
         }
@@ -108,7 +107,7 @@ public class Main {
 
     public static boolean searchPinNumber(String pinNumber) {
         for (Account x : accounts) {
-            if (x.getCardPIN().equals(pinNumber)) {
+            if (pinNumber.equals(x.getCardPIN())) {
                 return true;
             }
         }
@@ -134,29 +133,37 @@ public class Main {
     public static void logAccount() {
         Scanner sc = new Scanner(System.in);
         System.out.printf("Enter your card number:%n");
-        String cardNumber = sc.nextLine();
+        String cardiNumber = sc.nextLine();
         System.out.printf("Enter your pin number:%n");
         String pinNumber = sc.nextLine();
 
-        if (!searchAccount(cardNumber) && searchPinNumber(pinNumber)) {
-            System.out.printf("Wrong card number or PIN!%n");
-        } else {
+        if (searchAccount(cardiNumber) && searchPinNumber(pinNumber)) {
             System.out.printf("You have successfully logged in!%n");
-            menuUserLogged(cardNumber);
+            int opt;
+            do{
+              opt= menuUserLogged(cardiNumber);
+            }while(opt==1);
+
+        } else {
+            System.out.printf("Wrong card number or PIN!%n");
         }
     }
 
-    public static void menuUserLogged(String cardNumber) {
+    public static int menuUserLogged(String cardNumber) {
         System.out.printf("1. Balance%n2. Log out%n0. Exit%n");
-        switch (scanner.nextInt()) {
+        int opt=scanner.nextInt();
+        switch (opt) {
             case 1:
                 balance(cardNumber);
                 break;
             case 2:
                 System.out.println("You have successfully logged out!");
+                break;
             case 0:
-                System.out.println("Exit");
+                System.out.println("Bye!");
+                System.exit(0);
         }
+        return opt;
     }
 
     public static void balance(String cardNumber) {
@@ -164,7 +171,12 @@ public class Main {
                 .filter(x -> x.getCardNumber().equals(cardNumber))
                 .findFirst()
                 .orElse(null);
-        System.out.printf("Balance: %f%n", account.getBalance());
+        System.out.printf("Balance: %.0f%n", account.getBalance());
+    }
+    public static void showList(){
+        for (Account x : accounts){
+            System.out.printf("Card Number: %s%nPin Number: %s%n",x.getCardNumber(),x.getCardPIN());
+        }
     }
 }
 
