@@ -78,15 +78,17 @@ public class Main {
     }
 
     public static void createBankAccount() {
-        boolean validCard = false;
-
+        boolean validCard;
+        boolean lunh;
         String cardNumber;
         String pinNumber;
+
         do {
             cardNumber = BankingSystem.BIN.value.concat(randomNumberAccountGenerate());
             validCard = searchAccount(cardNumber);
+            lunh = luhnAlgorithm(cardNumber);
             pinNumber = randomPinGenerate();
-        } while (validCard);
+        } while (validCard || !lunh);
 
         accounts.add(new Account(cardNumber, pinNumber));
         showSuccesFullMessage(cardNumber, pinNumber);
@@ -116,8 +118,8 @@ public class Main {
 
     public static String randomNumberAccountGenerate() {
         Random random = new Random();
-        int max = 11000;
-        int min = 10000;
+        int max = 90000;
+        int min = 80000;
 
         int account1 = random.nextInt(max - min + 1) + min;
         int account2 = random.nextInt(max - min + 1) + min;
@@ -140,9 +142,9 @@ public class Main {
         if (searchAccount(cardiNumber) && searchPinNumber(pinNumber)) {
             System.out.printf("You have successfully logged in!%n");
             int opt;
-            do{
-              opt= menuUserLogged(cardiNumber);
-            }while(opt==1);
+            do {
+                opt = menuUserLogged(cardiNumber);
+            } while (opt == 1);
 
         } else {
             System.out.printf("Wrong card number or PIN!%n");
@@ -151,7 +153,7 @@ public class Main {
 
     public static int menuUserLogged(String cardNumber) {
         System.out.printf("1. Balance%n2. Log out%n0. Exit%n");
-        int opt=scanner.nextInt();
+        int opt = scanner.nextInt();
         switch (opt) {
             case 1:
                 balance(cardNumber);
@@ -173,10 +175,33 @@ public class Main {
                 .orElse(null);
         System.out.printf("Balance: %.0f%n", account.getBalance());
     }
-    public static void showList(){
-        for (Account x : accounts){
-            System.out.printf("Card Number: %s%nPin Number: %s%n",x.getCardNumber(),x.getCardPIN());
+
+    public static void showList() {
+        for (Account x : accounts) {
+            System.out.printf("Card Number: %s%nPin Number: %s%n", x.getCardNumber(), x.getCardPIN());
         }
+    }
+
+    public static boolean luhnAlgorithm(String numberCard) {
+        String[] array = numberCard.split("");
+        int[] numbers = changeValues(array);
+        int sum = 0;
+        for (int i = 0; i < numbers.length - 1; i++) {
+            numbers[i] = (i+1) % 2 != 0 ? numbers[i] * 2: numbers[i];
+            numbers[i] = numbers[i] > 9 ? numbers[i]-9 : numbers[i];
+            sum += numbers[i];
+        }
+        sum += numbers[numbers.length - 1];
+        return sum % 10 == 0;
+    }
+
+    public static int[] changeValues(String[] array) {
+        int[] numbers = new int[array.length];
+
+        for (int i = 0; i < array.length; i++) {
+            numbers[i] = Integer.parseInt(array[i]);
+        }
+        return numbers;
     }
 }
 

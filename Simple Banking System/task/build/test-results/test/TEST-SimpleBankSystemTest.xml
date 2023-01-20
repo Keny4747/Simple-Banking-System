@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="SimpleBankSystemTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-01-17T21:17:10" hostname="DESKTOP-AG8QKJE" time="0.465">
+<testsuite name="SimpleBankSystemTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-01-20T22:14:57" hostname="DESKTOP-AG8QKJE" time="0.355">
   <properties/>
-  <testcase name="start" classname="SimpleBankSystemTest" time="0.465"/>
+  <testcase name="start" classname="SimpleBankSystemTest" time="0.355"/>
   <system-out><![CDATA[?[1;31m
 Start test 1?[0m
 1. Create an account
@@ -10,18 +10,18 @@ Start test 1?[0m
 > 1
 Your card has been created
 Your card number:
-4000001082810764
+4000008794980644
 Your card PIN:
-1467
+6485
 1. Create an account
 2. Log into account
 0. Exit
 > 1
 Your card has been created
 Your card number:
-4000001002710259
+4000008166383914
 Your card PIN:
-4040
+1918
 1. Create an account
 2. Log into account
 0. Exit
@@ -35,17 +35,17 @@ Start test 2?[0m
 > 1
 Your card has been created
 Your card number:
-4000001006910310
+4000008242289887
 Your card PIN:
-7098
+7836
 1. Create an account
 2. Log into account
 0. Exit
 > 2
 Enter your card number:
-> 4000001006910310
+> 4000008242289887
 Enter your pin number:
-> 7098
+> 7836
 You have successfully logged in!
 1. Balance
 2. Log out
@@ -65,17 +65,17 @@ Start test 3?[0m
 > 1
 Your card has been created
 Your card number:
-4000001044110986
+4000008407184030
 Your card PIN:
-4714
+5100
 1. Create an account
 2. Log into account
 0. Exit
 > 2
 Enter your card number:
-> 4000001044110986
+> 4000008407184030
 Enter your pin number:
-> 2173
+> 9138
 Wrong card number or PIN!
 1. Create an account
 2. Log into account
@@ -90,17 +90,17 @@ Start test 4?[0m
 > 1
 Your card has been created
 Your card number:
-4000001082310341
+4000008155589224
 Your card PIN:
-1872
+5148
 1. Create an account
 2. Log into account
 0. Exit
 > 2
 Enter your card number:
-> 400000119378886
+> 400000218427022
 Enter your pin number:
-> 1872
+> 5148
 Wrong card number or PIN!
 1. Create an account
 2. Log into account
@@ -113,17 +113,17 @@ Start test 5?[0m
 > 1
 Your card has been created
 Your card number:
-4000001037810958
+4000008697980865
 Your card PIN:
-9184
+8539
 1. Create an account
 2. Log into account
 0. Exit
 > 2
 Enter your card number:
-> 4000001037810958
+> 4000008697980865
 Enter your pin number:
-> 9184
+> 8539
 You have successfully logged in!
 1. Balance
 2. Log out
@@ -135,6 +135,191 @@ Balance: 0
 0. Exit
 > 0
 Bye!
+?[1;31m
+Start test 6?[0m
+1. Create an account
+2. Log into account
+0. Exit
+> 1
+Your card has been created
+Your card number:
+4000008216789995
+Your card PIN:
+7462
+1. Create an account
+2. Log into account
+0. Exit
+> 1
+Your card has been created
+Your card number:
+4000008766484815
+Your card PIN:
+6916
+1. Create an account
+2. Log into account
+0. Exit
+> 1
+Your card has been created
+Your card number:
+4000008334284010
+Your card PIN:
+8884
+1. Create an account
+2. Log into account
+0. Exit
+> 1
+Your card has been created
+Your card number:
+4000008262889863
+Your card PIN:
+9187
+1. Create an account
+2. Log into account
+0. Exit
+> 1
+Your card has been created
+Your card number:
+4000008967684858
+Your card PIN:
+7409
+1. Create an account
+2. Log into account
+0. Exit
+> 1
+Your card has been created
+Your card number:
+4000008782887470
+Your card PIN:
+4521
+1. Create an account
+2. Log into account
+0. Exit
+> 1
+Your card has been created
+Your card number:
+4000008121485507
+Your card PIN:
+1453
+1. Create an account
+2. Log into account
+0. Exit
+> 1
+Your card has been created
+Your card number:
+4000008986082456
+Your card PIN:
+8253
+1. Create an account
+2. Log into account
+0. Exit
+> 1
+Your card has been created
+Your card number:
+4000008258788251
+Your card PIN:
+8786
+1. Create an account
+2. Log into account
+0. Exit
+> 1
+Your card has been created
+Your card number:
+4000008905389388
+Your card PIN:
+4952
+1. Create an account
+2. Log into account
+0. Exit
+> 1
+Your card has been created
+Your card number:
+4000008274384762
+Your card PIN:
+4808
+1. Create an account
+2. Log into account
+0. Exit
+> 1
+Your card has been created
+Your card number:
+4000008388685765
+Your card PIN:
+7051
+1. Create an account
+2. Log into account
+0. Exit
+> 1
+Your card has been created
+Your card number:
+4000008164287828
+Your card PIN:
+1831
+1. Create an account
+2. Log into account
+0. Exit
+> 1
+Your card has been created
+Your card number:
+4000008650182939
+Your card PIN:
+3843
+1. Create an account
+2. Log into account
+0. Exit
+> 1
+Your card has been created
+Your card number:
+4000008181589313
+Your card PIN:
+2590
+1. Create an account
+2. Log into account
+0. Exit
+> 1
+Your card has been created
+Your card number:
+4000008017483269
+Your card PIN:
+8581
+1. Create an account
+2. Log into account
+0. Exit
+> 1
+Your card has been created
+Your card number:
+4000008263682267
+Your card PIN:
+6279
+1. Create an account
+2. Log into account
+0. Exit
+> 1
+Your card has been created
+Your card number:
+4000008585786705
+Your card PIN:
+9350
+1. Create an account
+2. Log into account
+0. Exit
+> 1
+Your card has been created
+Your card number:
+4000008850081915
+Your card PIN:
+9727
+1. Create an account
+2. Log into account
+0. Exit
+> 1
+Your card has been created
+Your card number:
+4000008718484889
+Your card PIN:
+2357
+1. Create an account
+2. Log into account
+0. Exit
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

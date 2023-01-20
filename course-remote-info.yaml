@@ -3,14 +3,14 @@ hyperskill_project:
   ide_files: https://stepik.org/media/attachments/lesson/295560/additional_files.json
   is_template_based: false
   use_ide: true
-update_date: "Thu, 19 Jan 2023 20:58:52 UTC"
+update_date: "Fri, 20 Jan 2023 21:21:29 UTC"
 stages:
 - id: 515
   step: 8425
   is_completed: true
 - id: 516
   step: 8426
-  is_completed: false
+  is_completed: true
 - id: 517
   step: 8427
   is_completed: false
@@ -200,10 +200,10 @@ topics:
   - title: JDBC Statements
     theory_id: 9955
   3:
-  - title: Basic DELETE statement
-    theory_id: 9075
   - title: Results ordering
     theory_id: 8627
+  - title: Basic DELETE statement
+    theory_id: 9075
   - title: JDBC Prepared Statements
     theory_id: 11014
   - title: JDBC Transactions
