@@ -16,7 +16,6 @@ enum MenuOpt {
         this.value = value;
     }
 }
-
 enum BankingSystem {
     BIN("400000");
     final String value;
@@ -25,7 +24,6 @@ enum BankingSystem {
         this.value = value;
     }
 }
-
 public class Main {
     static Scanner scanner = new Scanner(System.in);
     static List<Account> accounts = new ArrayList<>();
@@ -41,7 +39,6 @@ public class Main {
         System.out.println("Bye!");
 
     }
-
     public static void showMenu() {
         System.out.printf("1. Create an account%n2. Log into account%n0. Exit%n");
     }
@@ -59,7 +56,6 @@ public class Main {
             case EXIT -> System.out.println("TODO exit");
         }
     }
-
     public static MenuOpt menu(int userInput) {
         switch (userInput) {
             case 1 -> {
@@ -76,7 +72,6 @@ public class Main {
             }
         }
     }
-
     public static void createBankAccount() {
         boolean validCard;
         boolean lunh;
@@ -93,11 +88,9 @@ public class Main {
         accounts.add(new Account(cardNumber, pinNumber));
         showSuccesFullMessage(cardNumber, pinNumber);
     }
-
     public static void showSuccesFullMessage(String cardNumber, String pin) {
         System.out.printf("Your card has been created%nYour card number:%n%s%nYour card PIN:%n%s%n", cardNumber, pin);
     }
-
     public static boolean searchAccount(String cardNumber) {
         for (Account x : accounts) {
             if (cardNumber.equals(x.getCardNumber())) {
@@ -106,7 +99,6 @@ public class Main {
         }
         return false;
     }
-
     public static boolean searchPinNumber(String pinNumber) {
         for (Account x : accounts) {
             if (pinNumber.equals(x.getCardPIN())) {
@@ -238,7 +230,7 @@ class Account {
     public void setBalance(double balance) {
         this.balance = balance;
     }
-
+    
     @Override
     public String toString() {
         return "Account{" +
