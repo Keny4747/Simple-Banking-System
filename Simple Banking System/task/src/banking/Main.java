@@ -1,5 +1,9 @@
 package banking;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -196,7 +200,35 @@ public class Main {
         return numbers;
     }
 }
+class Conexion{
+    public Connection connect() {
+        // SQLite connection string
+        String url = "jdbc:sqlite:E://sqlLite/db/card.db";
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(url);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return conn;
+    }
+    public void createNewTable() {
+        String sql = "CREATE TABLE IF NOT EXISTS card (\n"
+                + "	id integer,\n"
+                + "	number text,\n"
+                + "	pin text,\n"
+                + "balance integer default 0\n"
+                + ");";
+        try (Connection conn = this.connect(); Statement stmt = conn.createStatement()){
 
+            // create a new table
+            stmt.execute(sql);
+            System.out.println("Tabla creada");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+}
 class Account {
     private String cardNumber;
     private String cardPIN;
