@@ -29,26 +29,35 @@ public class Main {
     static Scanner scanner = new Scanner(System.in);
     static List<Account> accounts = new ArrayList<>();
 
+    Connect conn;
+    Main(String fileName){
+        this.conn=new Connect(fileName);
+        conn.createTable();
+    }
     public static void main(String[] args) {
+        //String fileName = args.length == 0 ? "database.db" : args[1];
+        String fileName = "card.s3db";
+        Main main = new Main(fileName);
         int inputUser;
         do {
-            showMenu();
-            inputUser = inputUserMenu();
-            menuBank(inputUser);
+            main.showMenu();
+            inputUser = main.inputUserMenu();
+            main.menuBank(inputUser);
         } while (inputUser != 0);
+
 
         System.out.println("Bye!");
 
     }
-    public static void showMenu() {
+    public  void showMenu() {
         System.out.printf("1. Create an account%n2. Log into account%n0. Exit%n");
     }
 
-    public static int inputUserMenu() {
+    public  int inputUserMenu() {
         return scanner.nextInt();
     }
 
-    public static void menuBank(int userInput) {
+    public void menuBank(int userInput) {
 
         MenuOpt option = menu(userInput);
         switch (option) {
@@ -73,7 +82,8 @@ public class Main {
             }
         }
     }
-    public static void createBankAccount() {
+    public void createBankAccount() {
+
         boolean validCard;
         boolean lunh;
         String cardNumber;
@@ -86,6 +96,7 @@ public class Main {
             pinNumber = randomPinGenerate();
         } while (validCard || !lunh);
 
+        conn.insert(cardNumber,pinNumber);
         accounts.add(new Account(cardNumber, pinNumber));
         showSuccesFullMessage(cardNumber, pinNumber);
     }
@@ -166,7 +177,7 @@ public class Main {
                 .filter(x -> x.getCardNumber().equals(cardNumber))
                 .findFirst()
                 .orElse(null);
-        System.out.printf("Balance: %.0f%n", account.getBalance());
+        System.out.printf("Balance: %d%n", account.getBalance());
     }
 
     public static void showList() {
@@ -197,51 +208,51 @@ public class Main {
         return numbers;
     }
 }
-class Conexion{
-    public  Connection connect() {
-        // SQLite connection string
-        String url = "jdbc:sqlite:E://sqlLite/db/card.db";
-        Connection conn = null;
-        try {
-            conn = DriverManager.getConnection(url);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return conn;
+class Connect{
+    private String url;
+    Connect(String fileName){
+        this.url="jdbc:sqlite:" + fileName;
     }
-    public void createNewTable() {
-        String sql = "CREATE TABLE IF NOT EXISTS card (\n"
-                + "	id integer,\n"
-                + "	number text,\n"
-                + "	pin text,\n"
-                + "balance integer default 0\n"
-                + ");";
-        try (Connection conn = this.connect(); Statement stmt = conn.createStatement()){
 
-            // create a new table
-            stmt.execute(sql);
-            System.out.println("Tabla creada");
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-    public void insert(String name, double capacity) {
-        String sql = "INSERT INTO warehouses(name,capacity) VALUES(?,?)";
 
-        try (Connection conn = this.connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, name);
-            pstmt.setDouble(2, capacity);
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+    public void createTable() {
+        try (Connection connection = DriverManager.getConnection(url)) {
+            if (connection != null) {
+                try (Statement statement = connection.createStatement()) {
+                    statement.executeUpdate("CREATE TABLE IF NOT EXISTS card (" +
+                            "id INTEGER PRIMARY KEY," +
+                            "number TEXT NOT NULL," +
+                            "pin TEXT NOT NULL," +
+                            "balance INTEGER DEFAULT 0" +
+                            ");");
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
     }
+    public void insert(String cardNumber,String pinNumber) {
+        try (Connection connection = DriverManager.getConnection(url)) {
+            if (connection != null) {
+                String query = "INSERT INTO card (number, pin) VALUES (?, ?);";
+                try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                    preparedStatement.setString(1, cardNumber);
+                    preparedStatement.setString(2, pinNumber);
+                    preparedStatement.executeUpdate();
+                }catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
 }
 class Account {
     private String cardNumber;
     private String cardPIN;
-    private double balance;
+    private int balance;
 
     public Account(String account, String pin) {
         this.cardNumber = account;
@@ -264,11 +275,11 @@ class Account {
         this.cardPIN = cardPIN;
     }
 
-    public double getBalance() {
+    public int getBalance() {
         return balance;
     }
 
-    public void setBalance(double balance) {
+    public void setBalance(int balance) {
         this.balance = balance;
     }
 
