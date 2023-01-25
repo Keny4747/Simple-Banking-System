@@ -136,7 +136,7 @@ public class Main {
         return String.valueOf(random.nextInt(9999 - 1000 + 1) + 1000);
     }
 
-    public static void logAccount() {
+    public  void logAccount() {
         Scanner sc = new Scanner(System.in);
         System.out.printf("Enter your card number:%n");
         String cardiNumber = sc.nextLine();
@@ -148,21 +148,28 @@ public class Main {
             int opt;
             do {
                 opt = menuUserLogged(cardiNumber);
-            } while (opt == 1);
+            } while (opt>0 && opt<4);
 
         } else {
             System.out.printf("Wrong card number or PIN!%n");
         }
     }
 
-    public static int menuUserLogged(String cardNumber) {
-        System.out.printf("1. Balance%n2. Log out%n0. Exit%n");
+    public int menuUserLogged(String cardNumber) {
+        System.out.printf("1. Balance%n2. Add income%n3. Do transfer%n4. Close account%n5. Log out%n0. Exit%n");
         int opt = scanner.nextInt();
         switch (opt) {
             case 1:
                 balance(cardNumber);
+
                 break;
-            case 2:
+            case 2: setBalance(cardNumber);
+                break;
+            case 3:// TODO: do transfer
+                break;
+            case 4: //TODO: close account
+                break;
+            case 5:
                 System.out.println("You have successfully logged out!");
                 break;
             case 0:
@@ -172,19 +179,26 @@ public class Main {
         return opt;
     }
 
-    public static void balance(String cardNumber) {
+    public void balance(String cardNumber) {
+        /*
         Account account = accounts.stream()
                 .filter(x -> x.getCardNumber().equals(cardNumber))
                 .findFirst()
                 .orElse(null);
         System.out.printf("Balance: %d%n", account.getBalance());
+
+         */
+        System.out.printf("Balance: %d%n",conn.selectBalancebyCardNumber(cardNumber));
+    }
+    public void setBalance(String cardNumber){
+        System.out.println("Enter income:");
+        int income = scanner.nextInt();
+
+        conn.updateBalance(cardNumber,income);
+        System.out.println("Income was added!");
+
     }
 
-    public static void showList() {
-        for (Account x : accounts) {
-            System.out.printf("Card Number: %s%nPin Number: %s%n", x.getCardNumber(), x.getCardPIN());
-        }
-    }
 
     public static boolean luhnAlgorithm(String numberCard) {
         String[] array = numberCard.split("");
@@ -246,6 +260,44 @@ class Connect{
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+    }
+    public  void updateBalance(String cardNumber, int balance){
+        String sql = "UPDATE card SET balance = ? "
+                + "WHERE number = ?";
+
+        try (Connection connection = DriverManager.getConnection(url);
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            // set the corresponding param
+            preparedStatement.setInt(1, balance);
+            preparedStatement.setString(2, cardNumber);
+            // update
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    public int selectBalancebyCardNumber(String cardNumber){
+        String sql = "SELECT balance "
+                + "FROM card WHERE number > ?";
+        int balance = 0;
+        try (Connection connection = DriverManager.getConnection(url);
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+
+            // set the value
+            preparedStatement.setString(1,cardNumber);
+            //
+            ResultSet rs  = preparedStatement.executeQuery();
+
+            // loop through the result set
+            while (rs.next()) {
+
+                balance=rs.getInt("balance");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return balance;
     }
 
 }

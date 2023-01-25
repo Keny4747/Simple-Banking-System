@@ -29,7 +29,7 @@
 </td>
 <td>
 <div class="infoBox" id="failures">
-<div class="counter">0</div>
+<div class="counter">1</div>
 <p>failures</p>
 </div>
 </td>
@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">1.617s</div>
+<div class="counter">2.455s</div>
 <p>duration</p>
 </div>
 </td>
@@ -50,8 +50,8 @@
 </div>
 </td>
 <td>
-<div class="infoBox success" id="successRate">
-<div class="percent">100%</div>
+<div class="infoBox failures" id="successRate">
+<div class="percent">0%</div>
 <p>successful</p>
 </div>
 </td>
@@ -61,13 +61,140 @@
 <div id="tabs">
 <ul class="tabLinks">
 <li>
-<a href="#tab0">Tests</a>
+<a href="#tab0">Failed tests</a>
 </li>
 <li>
-<a href="#tab1">Standard output</a>
+<a href="#tab1">Tests</a>
+</li>
+<li>
+<a href="#tab2">Standard output</a>
 </li>
 </ul>
 <div id="tab0" class="tab">
+<h2>Failed tests</h2>
+<div class="test">
+<a name="start"></a>
+<h3 class="failures">start</h3>
+<span class="code">
+<pre>java.lang.AssertionError: Wrong answer in test #10
+
+After choosing 'Exit' item you should stop your program and close database connection!
+
+Please find below the output of your program during this failed test.
+Note that the '&gt;' character indicates the beginning of the input line.
+
+---
+
+Arguments for Main: -fileName card.s3db
+Arguments for Main: -fileName card.s3db
+
+1. Create an account
+2. Log into account
+0. Exit
+&gt; 1
+Your card has been created
+Your card number:
+4000008859085867
+Your card PIN:
+7924
+1. Create an account
+2. Log into account
+0. Exit
+&gt; 2
+Enter your card number:
+&gt; 4000008859085867
+Enter your pin number:
+&gt; 7924
+You have successfully logged in!
+1. Balance
+2. Add income
+3. Do transfer
+4. Close account
+5. Log out
+0. Exit
+&gt; 2
+Enter income:
+&gt; 10000
+Income was added!
+1. Balance
+2. Add income
+3. Do transfer
+4. Close account
+5. Log out
+0. Exit
+&gt; 0
+Bye!
+1. Create an account
+2. Log into account
+0. Exit
+&gt; 2
+Enter your card number:
+&gt; 4000008859085867
+Enter your pin number:
+&gt; 7924
+Wrong card number or PIN!
+1. Create an account
+2. Log into account
+0. Exit
+&gt; 2
+Enter your card number:
+&gt; 15000
+Enter your pin number:
+&gt; 0
+Wrong card number or PIN!
+1. Create an account
+2. Log into account
+0. Exit
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.hyperskill.hstest.stage.StageTest.start(StageTest.java:203)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:63)
+	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+	at org.gradle.api.internal.tasks.testing.junit.JUnitTestClassExecutor.runTestClass(JUnitTestClassExecutor.java:110)
+	at org.gradle.api.internal.tasks.testing.junit.JUnitTestClassExecutor.execute(JUnitTestClassExecutor.java:58)
+	at org.gradle.api.internal.tasks.testing.junit.JUnitTestClassExecutor.execute(JUnitTestClassExecutor.java:38)
+	at org.gradle.api.internal.tasks.testing.junit.AbstractJUnitTestClassProcessor.processTestClass(AbstractJUnitTestClassProcessor.java:62)
+	at org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor.processTestClass(SuiteTestClassProcessor.java:51)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:36)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)
+	at org.gradle.internal.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:33)
+	at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:94)
+	at jdk.proxy1/jdk.proxy1.$Proxy2.processTestClass(Unknown Source)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker$2.run(TestWorker.java:176)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.executeAndMaintainThreadName(TestWorker.java:129)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:100)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:60)
+	at org.gradle.process.internal.worker.child.ActionExecutionWorker.execute(ActionExecutionWorker.java:56)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:133)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:71)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
+</pre>
+</span>
+</div>
+</div>
+<div id="tab1" class="tab">
 <h2>Tests</h2>
 <table>
 <thead>
@@ -78,13 +205,13 @@
 </tr>
 </thead>
 <tr>
-<td class="success">start</td>
-<td class="success">1.617s</td>
-<td class="success">passed</td>
+<td class="failures">start</td>
+<td class="failures">2.455s</td>
+<td class="failures">failed</td>
 </tr>
 </table>
 </div>
-<div id="tab1" class="tab">
+<div id="tab2" class="tab">
 <h2>Standard output</h2>
 <span class="code">
 <pre>?[1;31m
@@ -123,55 +250,55 @@ Start test 5?[0m
 &gt; 1
 Your card has been created
 Your card number:
-4000008196282854
+4000008940489318
 Your card PIN:
-4964
+9142
 1. Create an account
 2. Log into account
 0. Exit
 &gt; 1
 Your card has been created
 Your card number:
-4000008696982540
+4000008268489023
 Your card PIN:
-5238
+2758
 1. Create an account
 2. Log into account
 0. Exit
 &gt; 1
 Your card has been created
 Your card number:
-4000008228982778
+4000008401584052
 Your card PIN:
-4527
+1568
 1. Create an account
 2. Log into account
 0. Exit
 &gt; 1
 Your card has been created
 Your card number:
-4000008528089308
+4000008514387765
 Your card PIN:
-4238
+4926
 1. Create an account
 2. Log into account
 0. Exit
 &gt; 1
 Your card has been created
 Your card number:
-4000008567880849
+4000008427589358
 Your card PIN:
-4820
+7974
 1. Create an account
 2. Log into account
 0. Exit
 &gt; 0
 Bye!
-?[0;34m4000008196282854
-?[0m?[0;34m4000008696982540
-?[0m?[0;34m4000008228982778
-?[0m?[0;34m4000008528089308
-?[0m?[0;34m4000008567880849
+?[0;34m4000008940489318
+?[0m?[0;34m4000008268489023
+?[0m?[0;34m4000008401584052
+?[0m?[0;34m4000008514387765
+?[0m?[0;34m4000008427589358
 ?[1;31m
 Start test 6?[0m
 1. Create an account
@@ -180,20 +307,23 @@ Start test 6?[0m
 &gt; 1
 Your card has been created
 Your card number:
-4000008137083692
+4000008152886086
 Your card PIN:
-5364
+7319
 1. Create an account
 2. Log into account
 0. Exit
 &gt; 2
 Enter your card number:
-&gt; 4000008137083692
+&gt; 4000008152886086
 Enter your pin number:
-&gt; 5364
+&gt; 7319
 You have successfully logged in!
 1. Balance
-2. Log out
+2. Add income
+3. Do transfer
+4. Close account
+5. Log out
 0. Exit
 &gt; 0
 Bye!
@@ -205,17 +335,17 @@ Start test 7?[0m
 &gt; 1
 Your card has been created
 Your card number:
-4000008182480504
+4000008536882009
 Your card PIN:
-8377
+8796
 1. Create an account
 2. Log into account
 0. Exit
 &gt; 2
 Enter your card number:
-&gt; 4000008182480504
+&gt; 4000008536882009
 Enter your pin number:
-&gt; 2055
+&gt; 2843
 Wrong card number or PIN!
 1. Create an account
 2. Log into account
@@ -230,17 +360,17 @@ Start test 8?[0m
 &gt; 1
 Your card has been created
 Your card number:
-4000008331583794
+4000008796888654
 Your card PIN:
-6451
+2488
 1. Create an account
 2. Log into account
 0. Exit
 &gt; 2
 Enter your card number:
-&gt; 400000307491721
+&gt; 400000586620855
 Enter your pin number:
-&gt; 6451
+&gt; 2488
 Wrong card number or PIN!
 1. Create an account
 2. Log into account
@@ -255,28 +385,93 @@ Start test 9?[0m
 &gt; 1
 Your card has been created
 Your card number:
-4000008291088453
+4000008889288044
 Your card PIN:
-6117
+2312
 1. Create an account
 2. Log into account
 0. Exit
 &gt; 2
 Enter your card number:
-&gt; 4000008291088453
+&gt; 4000008889288044
 Enter your pin number:
-&gt; 6117
+&gt; 2312
 You have successfully logged in!
 1. Balance
-2. Log out
+2. Add income
+3. Do transfer
+4. Close account
+5. Log out
 0. Exit
 &gt; 1
 Balance: 0
 1. Balance
-2. Log out
+2. Add income
+3. Do transfer
+4. Close account
+5. Log out
 0. Exit
 &gt; 0
 Bye!
+?[1;31m
+Start test 10?[0m
+1. Create an account
+2. Log into account
+0. Exit
+&gt; 1
+Your card has been created
+Your card number:
+4000008859085867
+Your card PIN:
+7924
+1. Create an account
+2. Log into account
+0. Exit
+&gt; 2
+Enter your card number:
+&gt; 4000008859085867
+Enter your pin number:
+&gt; 7924
+You have successfully logged in!
+1. Balance
+2. Add income
+3. Do transfer
+4. Close account
+5. Log out
+0. Exit
+&gt; 2
+Enter income:
+&gt; 10000
+Income was added!
+1. Balance
+2. Add income
+3. Do transfer
+4. Close account
+5. Log out
+0. Exit
+&gt; 0
+Bye!
+1. Create an account
+2. Log into account
+0. Exit
+&gt; 2
+Enter your card number:
+&gt; 4000008859085867
+Enter your pin number:
+&gt; 7924
+Wrong card number or PIN!
+1. Create an account
+2. Log into account
+0. Exit
+&gt; 2
+Enter your card number:
+&gt; 15000
+Enter your pin number:
+&gt; 0
+Wrong card number or PIN!
+1. Create an account
+2. Log into account
+0. Exit
 </pre>
 </span>
 </div>
@@ -288,7 +483,7 @@ Bye!
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 7.3.3</a> at 24 ene 2023 16:30:44</p>
+<a href="http://www.gradle.org">Gradle 7.3.3</a> at 25 ene 2023 16:37:54</p>
 </div>
 </div>
 </body>
