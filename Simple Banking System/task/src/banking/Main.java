@@ -83,19 +83,16 @@ public class Main {
         }
     }
     public void createBankAccount() {
-
         boolean validCard;
         boolean lunh;
         String cardNumber;
         String pinNumber;
-
         do {
             cardNumber = BankingSystem.BIN.value.concat(randomNumberAccountGenerate());
-            validCard = searchAccount(cardNumber);
-            lunh = luhnAlgorithm(cardNumber);
             pinNumber = randomPinGenerate();
+            validCard = searchAccount(cardNumber,pinNumber);
+            lunh = luhnAlgorithm(cardNumber);
         } while (validCard || !lunh);
-
         conn.insert(cardNumber,pinNumber);
         accounts.add(new Account(cardNumber, pinNumber));
         showSuccesFullMessage(cardNumber, pinNumber);
@@ -103,13 +100,9 @@ public class Main {
     public static void showSuccesFullMessage(String cardNumber, String pin) {
         System.out.printf("Your card has been created%nYour card number:%n%s%nYour card PIN:%n%s%n", cardNumber, pin);
     }
-    public static boolean searchAccount(String cardNumber) {
-        for (Account x : accounts) {
-            if (cardNumber.equals(x.getCardNumber())) {
-                return true;
-            }
-        }
-        return false;
+    public boolean searchAccount(String cardNumber,String pinNumber) {
+        String res = conn.searchById(cardNumber);
+        return cardNumber.concat(pinNumber).equals(res);
     }
     public static boolean searchPinNumber(String pinNumber) {
         for (Account x : accounts) {
@@ -119,7 +112,6 @@ public class Main {
         }
         return false;
     }
-
     public static String randomNumberAccountGenerate() {
         Random random = new Random();
         int max = 90000;
@@ -143,7 +135,7 @@ public class Main {
         System.out.printf("Enter your pin number:%n");
         String pinNumber = sc.nextLine();
 
-        if (searchAccount(cardiNumber) && searchPinNumber(pinNumber)) {
+        if (searchAccount(cardiNumber,pinNumber)) {
             System.out.printf("You have successfully logged in!%n");
             int opt;
             do {
@@ -161,13 +153,12 @@ public class Main {
         switch (opt) {
             case 1:
                 balance(cardNumber);
-
                 break;
             case 2: setBalance(cardNumber);
                 break;
-            case 3:// TODO: do transfer
+            case 3:transfer(cardNumber);
                 break;
-            case 4: //TODO: close account
+            case 4: deleteAccount(cardNumber);
                 break;
             case 5:
                 System.out.println("You have successfully logged out!");
@@ -180,26 +171,50 @@ public class Main {
     }
 
     public void balance(String cardNumber) {
-        /*
-        Account account = accounts.stream()
-                .filter(x -> x.getCardNumber().equals(cardNumber))
-                .findFirst()
-                .orElse(null);
-        System.out.printf("Balance: %d%n", account.getBalance());
-
-         */
         System.out.printf("Balance: %d%n",conn.selectBalancebyCardNumber(cardNumber));
     }
     public void setBalance(String cardNumber){
         System.out.println("Enter income:");
         int income = scanner.nextInt();
 
-        conn.updateBalance(cardNumber,income);
+        int currentBalance=conn.selectBalancebyCardNumber(cardNumber);
+        currentBalance+=income;
+        conn.updateBalance(cardNumber, currentBalance);
         System.out.println("Income was added!");
-
     }
+    public void transfer(String cardNumber) {
+        System.out.println("Transfer\nEnter card number:");
+        String otherCard = scanner.next();
+        if (luhnAlgorithm(otherCard)) {
 
+            String cardTransfer = conn.searchForTransfer(otherCard);
+            if (otherCard.equals(cardTransfer)) {
+                int currentBalance = conn.selectBalancebyCardNumber(cardNumber);
+                int otherBalance = conn.selectBalancebyCardNumber(otherCard);
+                System.out.println("Enter how much money you want to transfer:");
+                int transBanlance = scanner.nextInt();
 
+                if (cardNumber.equals(otherCard)) {
+                    System.out.println("You can't transfer money to the same account!");
+                } else if (currentBalance < transBanlance) {
+                    System.out.println("Not enough money!");
+                } else {
+                    conn.updateBalance(cardNumber, (currentBalance-transBanlance));
+                    otherBalance+=transBanlance;
+                    conn.updateBalance(otherCard, otherBalance);
+                    System.out.println("Success!");
+                }
+            } else {
+                System.out.println("Such a card does not exist.");
+            }
+        } else {
+            System.out.println("Probably you made a mistake in the card number. Please try again!");
+        }
+    }
+    public void deleteAccount(String cardNumber) {
+        conn.delete(cardNumber);
+        System.out.println("The account has been closed!");
+    }
     public static boolean luhnAlgorithm(String numberCard) {
         String[] array = numberCard.split("");
         int[] numbers = changeValues(array);
@@ -212,7 +227,6 @@ public class Main {
         sum += numbers[numbers.length - 1];
         return sum % 10 == 0;
     }
-
     public static int[] changeValues(String[] array) {
         int[] numbers = new int[array.length];
 
@@ -227,8 +241,6 @@ class Connect{
     Connect(String fileName){
         this.url="jdbc:sqlite:" + fileName;
     }
-
-
     public void createTable() {
         try (Connection connection = DriverManager.getConnection(url)) {
             if (connection != null) {
@@ -279,7 +291,7 @@ class Connect{
     }
     public int selectBalancebyCardNumber(String cardNumber){
         String sql = "SELECT balance "
-                + "FROM card WHERE number > ?";
+                + "FROM card WHERE number = ?";
         int balance = 0;
         try (Connection connection = DriverManager.getConnection(url);
              PreparedStatement preparedStatement = connection.prepareStatement(sql)){
@@ -299,7 +311,63 @@ class Connect{
         }
         return balance;
     }
+    public String searchById(String cardNumber) {
+        String sql = "SELECT number,pin " + "FROM card WHERE number LIKE ?";
+        String result="";
+        try (Connection connection = DriverManager.getConnection(url);
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
+            // set the value
+            preparedStatement.setString(1, cardNumber);
+            //
+            ResultSet rs = preparedStatement.executeQuery();
+
+            // loop through the result set
+            while (rs.next()) {
+                result = rs.getString("number").concat(rs.getString("pin"));
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return result;
+    }
+    public String searchForTransfer(String cardNumber) {
+        String sql = "SELECT number " + "FROM card WHERE number LIKE ?";
+        String result = "";
+        try (Connection connection = DriverManager.getConnection(url);
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            // set the value
+            preparedStatement.setString(1, cardNumber);
+            //
+            ResultSet rs = preparedStatement.executeQuery();
+
+            // loop through the result set
+            while (rs.next()) {
+                result = rs.getString("number");
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return result;
+    }
+    public void delete(String cardNumber) {
+        String sql = "DELETE FROM card WHERE number LIKE ?";
+
+        try (Connection connection = DriverManager.getConnection(url);
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            // set the corresponding param
+            preparedStatement.setString(1, cardNumber);
+            // execute the delete statement
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }
 class Account {
     private String cardNumber;
