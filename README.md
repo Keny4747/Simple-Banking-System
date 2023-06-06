@@ -1,5 +1,9 @@
 # Simple-Banking-System
-
+## Tech Stack
+- SQLite
+- Graddle
+- Java 11
+- Algoritmo de Luhn
 ### Description
 You have created the foundation of our banking system. Now let's take the opportunity to deposit money into an account, 
 make transfers and close an account if necessary.
